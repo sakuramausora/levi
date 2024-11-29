@@ -57,13 +57,49 @@
         }
         .gallery img {
             width: auto;
-            height: 200;
+            height: 200px;
             border-radius: 15px;
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
         .gallery img:hover {
-            transform: scale(2.0);
+            transform: scale(1.1);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Pełnoekranowy tryb zdjęć */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 15px;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #ff6f61;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
 
         /* Sekcja historii */
@@ -160,6 +196,12 @@
         </div>
     </div>
 
+    <!-- Pełnoekranowy tryb zdjęć -->
+    <div class="lightbox" id="lightbox">
+        <button class="close" onclick="closeLightbox()">×</button>
+        <img src="" alt="Pełnoekranowe zdjęcie" id="lightbox-img">
+    </div>
+
     <!-- Sekcja: Historia -->
     <div class="container">
         <div class="history">
@@ -201,5 +243,21 @@
         🐾 Strona stworzona z miłości do kotów 🐾
     </div>
 
+    <script>
+        const galleryImages = document.querySelectorAll('.gallery img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.style.display = 'flex';
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
